@@ -7,7 +7,7 @@
 // Add name prompt 
 var playerName = window.prompt("What is your robot's name?")
 var playerHealth = 100;
-var playerAttack = 10;
+var playerAttack = 50;
 var playerMoney = 10;
 
 var enemyNames = ['Morgana', 'Master Yi', 'Yumi'];
@@ -73,27 +73,64 @@ var fight = function (enemyName) {
         }
         else {
             window.alert(playerName + " still has " + playerHealth + " health left.");
-        }           
-    }   
+        }
+    }
 };
 
-for (var i = 0; i < enemyNames.length; i++) {
+// function to stert a new game
+var startGame = function () {
+    // reset player health
+    playerHealth = 100;
+    playerAttack = 50;
+    playerMoney = 10;
+
+    for (var i = 0; i < enemyNames.length; i++) {
+        if (playerHealth > 0) {
+            // what round it is
+            window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
+
+            // pick the next enemy
+            var pickedEnemyName = enemyNames[i];
+
+            // reset enemy health
+            enemyHealth = 50;
+
+            // if in trouble us debugger
+            // debugger
+
+            // throws whatever robot enemy you are on into the fight function
+            fight(pickedEnemyName);
+
+        } else {
+            window.alert("You have lost your robot in battle! Game Over!!");
+        }
+    }
+
+    //    after loop ends, player is either dead or has defeated all enemies
+    endGame()
+};
+
+// function to end the entire game
+var endGame = function () {
+    // if player is still alive, player wins!
     if (playerHealth > 0) {
-        // what round it is
-        window.alert("Welcome to Robot Gladiators! Round " + (i + 1) );
+        window.alert("Great job, you survived the game! You now have a score of " + playerMoney + ".");
     }
     else {
-        window.alert("You have lost your robot in battle! Game Over!!");
+        window.alert(" You have lost your robot in battle.");
     }
-    // pick the next enemy
-    var pickedEnemyName = enemyNames[i];
+    //   ask player if they want to go again
+    var playAgainConfirm = window.confirm("Would you like to play again?");
 
-    // reset enemy health
-    enemyHealth = 50;
-
-    // if in trouble us debugger
-    // debugger
-
-    // throws whatever robot enemy you are on into the fight function
-    fight(pickedEnemyName);
+    if (playAgainConfirm) {
+        // restart game
+        startGame();
+    }
+    else {
+        window.alert("Thank you for Playing Robot Gladiatos! Comeback soon!");
+    }
 }
+
+
+// start the game 
+startGame();
