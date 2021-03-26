@@ -4,25 +4,46 @@
 //      *Defeat each enemy-robot
 // "Loss" - Player robot's health is zero or less
 
-// Add name prompt 
+var fightOrSkip = function () {
+
+    // ask if they want to fight or skip
+    var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.")
+
+    // enter the conditional recursive function call here!!
+    if (promptFight === "" || promptFight === null) {
+        window.alert("You need to provide a valid answer! Please try again.");
+        return fightOrSkip();
+    }
+    // set user input to lowercase
+    promptFight = promptFight.toLowerCase();
+    console.log(promptFight)
+    // if player choses skip 
+    if (promptFight === "skip") {
+        // confirm player wants to skip 
+        var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+        // if yes (true), leave fight 
+        if (confirmSkip) {
+            window.alert(playerInfo.name + " has chosen to skip fight. GoodBye!");
+            // subract money 
+            playerInfo.money = Math.max(0, playerInfo.money - 10);
+
+            //return true if player wants to leave
+            return true
+
+            // go to shop
+            shop();
+        }
+    }
+
+    return false
+}
 
 var fight = function (enemy) {
     while (enemy.health > 0 && playerInfo.health > 0) {
-        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.")
-
-        // if player choses skip 
-        if (promptFight === "skip" || promptFight === "SKIP") {
-            // confirm player wants to skip 
-            var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
-            // if yes (true), leave fight 
-            if (confirmSkip) {
-                window.alert(playerInfo.name + " has chosen to skip fight. GoodBye!");
-                // subract money 
-                playerInfo.money = Math.max(0, playerInfo.money - 10);
-                console.log("playerInfo.money", playerInfo.money);
-                break;
-            }
+        // prompt user to fight or skip fight
+        if (fightOrSkip()) { 
+            break;
         }
 
         // generate random damage value based on player attack poower
